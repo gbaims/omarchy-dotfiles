@@ -13,3 +13,6 @@ source ~/.local/share/omarchy/default/bash/rc
 # Manage dotfiles
 alias gdf='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias ldf='lazygit --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+# General aliases
+alias hx='helix'
