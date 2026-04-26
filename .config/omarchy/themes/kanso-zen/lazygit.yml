@@ -1,0 +1,27 @@
+gui:
+  theme:
+    # Borda da janela em foco (Azul acinzentado claro)
+    activeBorderColor:
+      - '#8ba4b0'
+      - bold
+    # Borda das janelas sem foco (Cinza médio para dar separação visual)
+    inactiveBorderColor:
+      - '#515967' # Tom intermediário entre o fundo e o texto
+    # Texto de opções na barra inferior
+    optionsTextColor:
+      - '#8992a7'
+    # Cor da linha selecionada (Um pouco mais clara para destacar o texto)
+    selectedLineBgColor:
+      - '#2d333b'
+    selectedRangeBgColor:
+      - '#2d333b'
+    # Cores de Commits e Mudanças
+    cherryPickedCommitFgColor:
+      - '#8ba4b0'
+    cherryPickedCommitBgColor:
+      - '#2d333b'
+    unstagedChangesColor:
+      - '#C34043'
+    # Cor principal do texto (Garante que o texto brilhe no fundo escuro)
+    defaultFgColor:
+      - '#C5C9C7'
