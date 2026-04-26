@@ -1,0 +1,244 @@
+# Kanso Ink — Helix Editor Theme
+# Ported from the Zed Kanso Ink theme
+# Place this file in ~/.config/helix/themes/kanso_ink.toml
+# Then set `theme = "kanso_ink"` in ~/.config/helix/config.toml
+
+# ── UI ────────────────────────────────────────────────────────────────────────
+
+"ui.background"             = { bg = "bg" }
+"ui.gutter"                 = { bg = "bg" }
+"ui.gutter.selected"        = { bg = "active_line" }
+
+"ui.text"                   = { fg = "fg" }
+"ui.text.focus"             = { fg = "fg", modifiers = ["bold"] }
+"ui.text.inactive"          = { fg = "text_muted" }
+"ui.text.info"              = { fg = "text_muted" }
+
+"ui.linenr"                 = { fg = "line_number" }
+"ui.linenr.selected"        = { fg = "fg" }
+
+"ui.cursorline.primary"     = { bg = "active_line" }
+"ui.cursorline.secondary"   = { bg = "surface" }
+
+"ui.cursor"                 = { fg = "bg", bg = "fg" }
+"ui.cursor.primary"         = { fg = "bg", bg = "fg" }
+"ui.cursor.match"           = { bg = "search_match" }
+"ui.cursor.insert"          = { fg = "bg", bg = "string_c" }
+"ui.cursor.select"          = { fg = "bg", bg = "function_c" }
+
+"ui.selection"              = { bg = "selection" }
+"ui.selection.primary"      = { bg = "selection" }
+
+"ui.highlight"              = { bg = "element_hover" }
+"ui.highlight.frameline"    = { bg = "active_line" }
+
+"ui.window"                 = { fg = "border" }
+"ui.pane.split"             = { fg = "border" }
+"ui.popup"                  = { fg = "fg", bg = "surface" }
+"ui.popup.info"             = { fg = "fg", bg = "surface" }
+
+"ui.help"                   = { fg = "fg", bg = "surface" }
+
+"ui.menu"                   = { fg = "fg", bg = "surface" }
+"ui.menu.selected"          = { fg = "fg", bg = "element_selected", modifiers = ["bold"] }
+"ui.menu.scroll"            = { fg = "text_muted", bg = "surface" }
+
+"ui.picker.header"          = { fg = "accent_blue", modifiers = ["bold", "underlined"] }
+"ui.picker.header.column"   = { fg = "text_muted" }
+
+"ui.statusline"             = { fg = "fg", bg = "surface" }
+"ui.statusline.inactive"    = { fg = "text_muted", bg = "bg" }
+"ui.statusline.normal"      = { fg = "bg", bg = "fg", modifiers = ["bold"] }
+"ui.statusline.insert"      = { fg = "bg", bg = "string_c", modifiers = ["bold"] }
+"ui.statusline.select"      = { fg = "bg", bg = "function_c", modifiers = ["bold"] }
+"ui.statusline.separator"   = { fg = "border" }
+
+"ui.tab.inactive"           = { fg = "text_muted", bg = "bg" }
+"ui.tab.active"             = { fg = "fg", bg = "surface", modifiers = ["bold"] }
+
+"ui.scrollbar"              = { bg = "bg" }
+"ui.scrollbar.thumb"        = { fg = "scrollbar_thumb", bg = "bg" }
+
+"ui.virtual.ruler"          = { bg = "active_line" }
+"ui.virtual.whitespace"     = { fg = "invisible" }
+"ui.virtual.indent-guide"   = { fg = "border" }
+"ui.virtual.inlay-hint"     = { fg = "text_muted" }
+"ui.virtual.inlay-hint.type"      = { fg = "type_c" }
+"ui.virtual.inlay-hint.parameter" = { fg = "property_c" }
+"ui.virtual.jump-label"     = { fg = "accent_red", modifiers = ["bold"] }
+"ui.virtual.wrap"           = { fg = "border" }
+
+# ── Diagnostics ───────────────────────────────────────────────────────────────
+
+"diagnostic.error"        = { underline = { color = "error_c", style = "curl" } }
+"diagnostic.warning"      = { underline = { color = "warning_c", style = "curl" } }
+"diagnostic.info"         = { underline = { color = "info_c", style = "curl" } }
+"diagnostic.hint"         = { underline = { color = "hint_c", style = "curl" } }
+"diagnostic.unnecessary"  = { modifiers = ["dim"] }
+"diagnostic.deprecated"   = { modifiers = ["crossed_out"] }
+
+"error"   = { fg = "error_c" }
+"warning" = { fg = "warning_c" }
+"info"    = { fg = "info_c" }
+"hint"    = { fg = "hint_c" }
+
+# ── Diff / VCS ────────────────────────────────────────────────────────────────
+
+"diff.plus"       = { fg = "success_c" }
+"diff.minus"      = { fg = "error_c" }
+"diff.delta"      = { fg = "warning_c" }
+"diff.delta.moved"= { fg = "info_c" }
+
+# ── Markup ────────────────────────────────────────────────────────────────────
+
+"markup.heading"          = { fg = "fg", modifiers = ["bold"] }
+"markup.heading.1"        = { fg = "fg", modifiers = ["bold"] }
+"markup.heading.2"        = { fg = "accent_blue", modifiers = ["bold"] }
+"markup.heading.3"        = { fg = "type_c", modifiers = ["bold"] }
+"markup.heading.4"        = { fg = "property_c", modifiers = ["bold"] }
+"markup.heading.5"        = { fg = "text_muted", modifiers = ["bold"] }
+"markup.heading.6"        = { fg = "text_muted" }
+"markup.heading.marker"   = { fg = "text_muted" }
+
+"markup.bold"             = { modifiers = ["bold"] }
+"markup.italic"           = { modifiers = ["italic"] }
+"markup.strikethrough"    = { modifiers = ["crossed_out"] }
+
+"markup.raw"              = { fg = "string_c" }
+"markup.raw.block"        = { fg = "string_c" }
+"markup.raw.inline"       = { fg = "string_c" }
+
+"markup.list"             = { fg = "punctuation_c" }
+"markup.list.checked"     = { fg = "success_c" }
+"markup.list.unchecked"   = { fg = "text_muted" }
+
+"markup.quote"            = { fg = "text_muted", modifiers = ["italic"] }
+
+"markup.link.url"         = { fg = "link_uri_c", underline = { color = "link_uri_c", style = "line" } }
+"markup.link.text"        = { fg = "link_text_c" }
+"markup.link.label"       = { fg = "link_text_c" }
+
+# ── Syntax ────────────────────────────────────────────────────────────────────
+
+"type"                    = { fg = "type_c" }
+"type.builtin"            = { fg = "type_c" }
+"type.enum.variant"       = { fg = "constant_c" }
+
+"constructor"             = { fg = "constructor_c" }
+
+"constant"                = { fg = "constant_c" }
+"constant.builtin"        = { fg = "constant_c" }
+"constant.builtin.boolean"= { fg = "constant_c" }
+"constant.character"      = { fg = "string_c" }
+"constant.character.escape"={ fg = "string_c" }
+"constant.numeric"        = { fg = "number_c" }
+"constant.numeric.integer"= { fg = "number_c" }
+"constant.numeric.float"  = { fg = "number_c" }
+
+"string"                  = { fg = "string_c" }
+"string.regexp"           = { fg = "string_c" }
+"string.special"          = { fg = "string_c" }
+"string.special.symbol"   = { fg = "string_c" }
+"string.special.url"      = { fg = "link_uri_c", underline = { color = "link_uri_c", style = "line" } }
+"string.special.path"     = { fg = "string_c" }
+
+"comment"                 = { fg = "comment_c", modifiers = ["italic"] }
+"comment.line"            = { fg = "comment_c", modifiers = ["italic"] }
+"comment.block"           = { fg = "comment_c", modifiers = ["italic"] }
+"comment.block.documentation" = { fg = "comment_c", modifiers = ["italic"] }
+
+"variable"                = { fg = "variable_c" }
+"variable.builtin"        = { fg = "constant_c" }
+"variable.parameter"      = { fg = "property_c" }
+"variable.other.member"   = { fg = "property_c" }
+
+"label"                   = { fg = "fg" }
+
+"punctuation"             = { fg = "punctuation_c" }
+"punctuation.delimiter"   = { fg = "punctuation_c" }
+"punctuation.bracket"     = { fg = "punctuation_c" }
+"punctuation.special"     = { fg = "punctuation_c" }
+
+"keyword"                 = { fg = "keyword_c", modifiers = ["italic"] }
+"keyword.control"         = { fg = "keyword_c", modifiers = ["italic"] }
+"keyword.control.conditional"  = { fg = "keyword_c", modifiers = ["italic"] }
+"keyword.control.repeat"  = { fg = "keyword_c", modifiers = ["italic"] }
+"keyword.control.import"  = { fg = "keyword_c", modifiers = ["italic"] }
+"keyword.control.return"  = { fg = "keyword_c", modifiers = ["italic"] }
+"keyword.control.exception"    = { fg = "keyword_c", modifiers = ["italic"] }
+"keyword.control.exception.php"= { fg = "keyword_c", modifiers = ["italic"] }
+"keyword.operator"        = { fg = "operator_c" }
+"keyword.directive"       = { fg = "attribute_c" }
+"keyword.function"        = { fg = "keyword_c", modifiers = ["italic"] }
+"keyword.storage"         = { fg = "keyword_c", modifiers = ["italic"] }
+"keyword.storage.type"    = { fg = "keyword_c", modifiers = ["italic"] }
+"keyword.storage.modifier"= { fg = "keyword_c", modifiers = ["italic"] }
+
+"operator"                = { fg = "operator_c" }
+
+"function"                = { fg = "function_c" }
+"function.builtin"        = { fg = "function_c" }
+"function.method"         = { fg = "function_c" }
+"function.method.static"  = { fg = "function_c", modifiers = ["italic"] }
+"function.macro"          = { fg = "attribute_c" }
+"function.special"        = { fg = "function_c" }
+
+"tag"                     = { fg = "tag_c" }
+"tag.builtin"             = { fg = "tag_c" }
+"tag.error"               = { fg = "error_c" }
+"attribute"               = { fg = "attribute_c" }
+
+"namespace"               = { fg = "type_c" }
+"module"                  = { fg = "type_c" }
+"special"                 = { fg = "property_c" }
+
+# ── Palette ───────────────────────────────────────────────────────────────────
+
+[palette]
+
+# ── Base surfaces ──────────────────────────────────────────────────────────────
+bg              = "#14171d"
+surface         = "#22262D"
+active_line     = "#22262D"
+element_hover   = "#393B44"
+element_selected= "#393B44"
+selection       = "#393B44"
+search_match    = "#536269"
+scrollbar_thumb = "#5C6066"
+border          = "#22262D"
+invisible       = "#22262D"
+
+# ── Text ───────────────────────────────────────────────────────────────────────
+fg              = "#c5c9c7"
+text_muted      = "#75797f"
+line_number     = "#5C6066"
+
+# ── Accents ────────────────────────────────────────────────────────────────────
+accent_red      = "#c4746e"
+accent_blue     = "#8ba4b0"
+accent_purple   = "#949fb5"
+
+# ── Syntax tokens ──────────────────────────────────────────────────────────────
+keyword_c       = "#8992A7"
+function_c      = "#8BA4B0"
+string_c        = "#8A9A7B"
+comment_c       = "#75797F"
+constant_c      = "#B6927B"
+type_c          = "#8EA4A2"
+property_c      = "#C4B28A"
+tag_c           = "#C4B28A"
+number_c        = "#A292A3"
+operator_c      = "#9E9B93"
+punctuation_c   = "#9E9B93"
+variable_c      = "#C5C9C7"
+constructor_c   = "#949FB5"
+attribute_c     = "#8992A7"
+link_uri_c      = "#8992A7"
+link_text_c     = "#9E9B93"
+
+# ── Status ─────────────────────────────────────────────────────────────────────
+error_c         = "#c4746e"
+warning_c       = "#c4b28a"
+info_c          = "#949fb5"
+hint_c          = "#8ba4b0"
+success_c       = "#87a987"
