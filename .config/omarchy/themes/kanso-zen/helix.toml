@@ -1,7 +1,7 @@
-# Kanso Ink — Helix Editor Theme
-# Ported from the Zed Kanso Ink theme
-# Place this file in ~/.config/helix/themes/kanso_ink.toml
-# Then set `theme = "kanso_ink"` in ~/.config/helix/config.toml
+# Kanso Zen — Helix Editor Theme
+# Ported from the Zed Kanso Zen theme
+# Place this file in ~/.config/helix/themes/kanso_zen.toml
+# Then set `theme = "kanso_zen"` in ~/.config/helix/config.toml
 
 # ── UI ────────────────────────────────────────────────────────────────────────
 
@@ -197,16 +197,16 @@
 [palette]
 
 # ── Base surfaces ──────────────────────────────────────────────────────────────
-bg              = "#14171d"
-surface         = "#22262D"
+bg              = "#090E13"
+surface         = "#14171d"
 active_line     = "#22262D"
 element_hover   = "#393B44"
 element_selected= "#393B44"
 selection       = "#393B44"
 search_match    = "#536269"
 scrollbar_thumb = "#5C6066"
-border          = "#22262D"
-invisible       = "#22262D"
+border          = "#14171d"
+invisible       = "#090E13"
 
 # ── Text ───────────────────────────────────────────────────────────────────────
 fg              = "#c5c9c7"
