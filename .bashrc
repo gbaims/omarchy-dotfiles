@@ -16,3 +16,5 @@ alias ldf='lazygit --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # General aliases
 alias hx='helix'
+alias ll='ls -la'
+
