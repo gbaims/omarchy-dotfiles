@@ -5,3 +5,11 @@ hooks.location=~/.config/task/hooks
 
 search.case.sensitive=0
 
+report.next.filter=status:pending -WAITING limit:1
+
+report.nextn.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
+report.nextn.context=1
+report.nextn.description=Most urgent tasks
+report.nextn.filter=status:pending -WAITING limit:page
+report.nextn.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
+report.nextn.sort=urgency-
