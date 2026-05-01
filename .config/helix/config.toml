@@ -1,1 +1,4 @@
 theme = "current"
+
+[editor.file-picker]
+hidden = false
