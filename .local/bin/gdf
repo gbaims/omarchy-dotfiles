@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ "$PWD" = "$HOME" ]; then
+    git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME" "$@"
+else
+    git "$@"
+fi

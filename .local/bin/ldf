@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ "$PWD" = "$HOME" ]; then
+    lazygit --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"
+else
+    lazygit
+fi
