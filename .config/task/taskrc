@@ -10,3 +10,85 @@ verbose=blank,header,footnote,label,new-id,news,affected,edit,special,project,sy
 search.case.sensitive=0
 
 
+# Kanso Zen — TaskWarrior v3 Colors (v4)
+# Calibrado com o tema oficial do opencode
+#
+# Referências exatas da paleta:
+#   background      #090E13   → color0  (black)
+#   backgroundPanel #1C1E25   → color234 (faixa alternada / header bg)
+#   text            #C5C9C7   → fg padrão do terminal
+#   textMuted       #A4A7A4   → color8  (bright black)
+#   primary         #8ba4b0   → color12 (bright blue)
+#   accent          #c4b28a   → color3  (yellow)
+#   error           #C34043   → color9  (bright red)
+#   warning         #DCA561   → color11 (bright yellow)
+#   success         #98BB6C   → color10 (bright green)
+#   info            #658594   → color4  (blue)
+#   secondary       #8992a7   → color5  (magenta)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Faixas alternadas ────────────────────────────────────────────────────────
+# backgroundPanel #1C1E25 → color234 (#1c1c1c) é o mais próximo em 256 cores
+color.alternate=on color234
+
+# ── Cabeçalhos ───────────────────────────────────────────────────────────────
+# Fundo color234 ancora o header visualmente sem criar inconsistência
+# color.label.sort = mesmo valor que color.label → sem destaque especial na coluna ordenada
+color.header=color12 on color234
+color.label=color12 on color234
+color.label.sort=color12 on color234
+
+# ── Mensagens do sistema ─────────────────────────────────────────────────────
+color.footnote=color8
+color.error=color9
+color.warning=color11
+color.debug=color5
+
+# ── Prioridade ───────────────────────────────────────────────────────────────
+color.uda.priority.H=color9
+color.uda.priority.M=color11
+color.uda.priority.L=color10
+
+# ── Datas / Prazos ───────────────────────────────────────────────────────────
+color.overdue=color9
+color.due.today=color11
+color.due=color3
+color.scheduled=color6
+
+# ── Status das tarefas ───────────────────────────────────────────────────────
+color.active=color10
+color.blocked=color5
+color.blocking=color13
+color.completed=color8
+color.deleted=color8
+
+# ── tag +next ────────────────────────────────────────────────────────────────
+color.tag.next=color11
+
+# ── Relatórios de histórico ──────────────────────────────────────────────────
+color.history.add=color10
+color.history.done=color11
+color.history.delete=color9
+
+# ── Burndown ─────────────────────────────────────────────────────────────────
+color.burndown.done=color10 on color2
+color.burndown.pending=color9 on color1
+color.burndown.started=color11 on color3
+
+# ── Summary ──────────────────────────────────────────────────────────────────
+color.summary.background=on color234
+color.summary.bar=color10 on color2
+
+# ── Sync ─────────────────────────────────────────────────────────────────────
+color.sync.added=color10
+color.sync.changed=color11
+color.sync.rejected=color9
+
+# ── Calendário ───────────────────────────────────────────────────────────────
+color.calendar.due=color3
+color.calendar.due.today=color11
+color.calendar.overdue=color9
+color.calendar.today=color12 on color234
+color.calendar.holiday=color13
+color.calendar.weekend=color8
+color.calendar.weeknumber=color4
