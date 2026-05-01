@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Task Warrior
+Comment=Task Warrior
+Exec=xdg-terminal-exec --app-id=TUI.float -e tasktui
+Terminal=false
+Type=Application
+Icon=/home/gabriel/.local/share/applications/icons/Task Warrior.png
+StartupNotify=true

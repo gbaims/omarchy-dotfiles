@@ -1,0 +1,77 @@
+# Extract id from row
+_id() {
+  echo "$1" | awk '{print $1}'
+}
+export -f _id
+
+# Query pending and waiting tasks by default (shortcuts to search other statuses)
+_query() {
+  [[ $# -eq 0 || -z "$1" ]] && return
+  local status="\( status:pending or status:waiting \)"
+  local query=""
+  for word in $@; do
+    case "$word" in
+      :a)                  status=" " ;;
+      :p|status:pending)   status="status:pending" ;;
+      :w|status:waiting)   status="status:waiting" ;;
+      :c|status:completed) status="status:completed" ;;
+      :d|status:deleted)   status="status:deleted" ;;
+      :r|status:recurring) status="status:recurring" ;;
+      *)                   query="$query $word" ;;
+    esac
+  done
+  local final_query="$status $query"
+  echo "${final_query## }"
+}
+export -f _query
+
+OPTS=(
+    "rc.report.dyn.columns=uuid.short,status.short,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description.truncated_count,urgency"
+    "rc.report.dyn.labels=UUID,S,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg"
+    "rc.report.dyn.sort=urgency-"
+    "rc.report.dyn.filter="
+    "rc.verbose=label"
+    'rc.defaultwidth=$FZF_PREVIEW_COLUMNS'
+)
+
+TASK="task ${OPTS[*]} dyn"
+DEFAULT_FILTER="status:pending -WAITING limit:1"
+
+on_reload="q=\$(_query {q}); $TASK \${q:-$DEFAULT_FILTER} || true"
+
+fzf_args=(
+  # Task Warrior reports have two header lines
+  --header-lines=2
+  # Socket for external commands
+  --listen /tmp/fzf.sock
+  # Filter logic executed by Task Warrior
+  --disabled
+  --bind "change:reload($on_reload)"
+  # Task Info on preview window
+  --preview-window 'down:75%:nowrap'
+  --layout 'reverse'
+  --preview 'COLUMNS=$FZF_PREVIEW_COLUMNS task rc.defaultwidth=$FZF_PREVIEW_COLUMNS rc._forcecolor=yes $(_id {}) info'
+  # --preview 'task rc.defaultwidth=$FZF_PREVIEW_COLUMNS rc._forcecolor=yes $(_id {}) info'
+  # Keybinding
+  --bind 'alt-k:preview-up,alt-j:preview-down' # TODO Refreshing makes it go to the top every second
+  --bind 'alt-p:toggle-preview'
+  --bind 'alt-s:execute-silent(id=$(_id {}); s=$(task _get "$id.start"); [ -n "$s" ] && task rc.verbose=nothing "$id" stop || task rc.verbose=nothing "$id" start)+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'alt-d:execute-silent(id=$(_id {}); s=$(task _get "$id.status"); [ "$s" = "completed" ] && task "$id" modify status:pending || task "$id" done)+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'alt-n:execute(id=$(_id {}); clear; echo -n "task annotate <annotation>: "; read ann; [ -n "$ann" ] && task rc.verbose=nothing "$id" annotate "$ann")+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'alt-a:execute(clear; echo -n "task add <title> [-- <annotation>]: "; read input; title="${input%%--*}"; ann="${input#*--}"; title="${title%% }"; [ -z "$title" ] && exit; task rc.verbose=nothing add "$title"; uuid=$(task +LATEST _get uuid); [[ "$input" == *"--"* && -n "${ann## }" ]] && task rc.verbose=nothing "$uuid" annotate "${ann## }"; curl --unix-socket /tmp/fzf.sock http -d "change-query($uuid)" 2>/dev/null)+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'alt-m:execute(id=$(_id {}); clear; echo -n "task modify <mods>: "; read mods; [ -n "$mods" ] && task rc.verbose=nothing "$id" modify $mods)+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'alt-w:execute(id=$(_id {}); clear; echo -n "task modify wait:<date>: "; read date; [ -n "$date" ] && task rc.verbose=nothing "$id" modify wait:"$date")+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'enter:execute(id=$(_id {}); task rc.verbose=nothing "$id" edit)+reload(sleep 0.1; '"$on_reload"')'
+  # Theming
+  --ansi
+  --color 'pointer:green,marker:green'
+)
+
+# Reload query every second
+(while sleep 1; do curl --unix-socket /tmp/fzf.sock http -d "reload($on_reload)" 2>/dev/null; done) & 
+LOOP_PID=$!
+trap "kill $LOOP_PID 2>/dev/null" EXIT INT TERM
+
+# Start fzf
+$TASK $DEFAULT_FILTER | fzf "${fzf_args[@]}"
+
