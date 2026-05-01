@@ -5,16 +5,12 @@
 # (don't mess with these directly, just overwrite them here!)
 source ~/.local/share/omarchy/default/bash/rc
 
-# Add your own exports, aliases, and functions here.
-#
-# Make an alias for invoking commands you use constantly
-# alias p='python'
-
-# Manage dotfiles
-alias gdf='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias ldf='lazygit --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # General aliases
 alias hx='helix'
 alias ll='ls -la'
 
+
+# Manage dotfiles
+alias gdf='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias ldf='lazygit --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
