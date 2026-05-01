@@ -3,13 +3,10 @@ news.version=3.4.2
 data.location=~/.local/share/task
 hooks.location=~/.config/task/hooks
 
+# Include all output, except override
+verbose=blank,header,footnote,label,new-id,news,affected,edit,special,project,sync,recur
+
+# Search more easily
 search.case.sensitive=0
 
-report.next.filter=status:pending -WAITING limit:1
 
-report.nextn.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
-report.nextn.context=1
-report.nextn.description=Most urgent tasks
-report.nextn.filter=status:pending -WAITING limit:page
-report.nextn.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
-report.nextn.sort=urgency-
