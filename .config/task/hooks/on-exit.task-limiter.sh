@@ -2,11 +2,10 @@
 # ~/.task/hooks/on-exit.task-limiter.sh
 # For tasks active for over 1h, add a wait time
 
-LOCKFILE="/tmp/task-limiter.lock"
+LOCKDIR="/tmp/task-limiter.lock"
 
-[ -f "$LOCKFILE" ] && exit 0
-touch "$LOCKFILE"
-trap "rm -f $LOCKFILE" EXIT
+mkdir "$LOCKDIR" 2>/dev/null || exit 0
+trap 'rm -rf "$LOCKDIR"' EXIT
 
 
 # Waiting tasks must not be active
