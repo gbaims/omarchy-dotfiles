@@ -167,7 +167,7 @@ export -f _edit_task
 OPTS=(
     "rc.report.dyn.columns=uuid.short,status.short,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description.truncated_count,urgency"
     "rc.report.dyn.labels=UUID,S,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg"
-    "rc.report.dyn.sort=urgency-"
+    "rc.report.dyn.sort=start-,urgency-,modified-"
     "rc.report.dyn.filter="
     "rc.verbose=label"
     'rc.defaultwidth=$FZF_PREVIEW_COLUMNS'
