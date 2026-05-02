@@ -188,7 +188,7 @@ fzf_args=(
   --disabled
   --bind "change:reload($on_reload)"
   # Task Info on preview window
-  --preview-window 'down:75%:nowrap'
+  --preview-window 'down:80%:nowrap'
   --preview-label "$SHORTCUTS"
   --preview-label-pos 'bottom'
   --layout 'reverse'
