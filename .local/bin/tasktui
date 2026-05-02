@@ -163,6 +163,7 @@ TASK="task ${OPTS[*]} dyn"
 DEFAULT_FILTER="status:pending -WAITING limit:1"
 
 on_reload="q=\$(_query {q}); $TASK \${q:-$DEFAULT_FILTER} || true"
+SHORTCUTS='alt: (a)dd | (n)ote | (m)odify | (w)ait | (s)tart/stop | (d)one/undo | (p)review'
 
 fzf_args=(
   # Task Warrior reports have two header lines
@@ -174,6 +175,8 @@ fzf_args=(
   --bind "change:reload($on_reload)"
   # Task Info on preview window
   --preview-window 'down:75%:nowrap'
+  --preview-label "$SHORTCUTS"
+  --preview-label-pos 'bottom'
   --layout 'reverse'
   --preview 'COLUMNS=$FZF_PREVIEW_COLUMNS task rc.defaultwidth=$FZF_PREVIEW_COLUMNS rc._forcecolor=yes $(_id {}) info'
   # Keybinding
