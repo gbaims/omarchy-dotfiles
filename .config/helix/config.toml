@@ -3,5 +3,5 @@ theme = "current"
 [editor.file-picker]
 hidden = false
 
-[keys.normal]
-C-g = [ ":write-all", ":insert-output ldf >/dev/tty", ":redraw", ":reload-all" ]
+[keys.normal.space]
+g = [ ":write-all", ":insert-output ldf >/dev/tty", ":redraw", ":reload-all" ]
