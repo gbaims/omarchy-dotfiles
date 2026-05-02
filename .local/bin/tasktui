@@ -33,10 +33,19 @@ _trim() {
 }
 export -f _trim
 
+_oneline() {
+  printf "%s" "$1" | tr '\n' ' '
+}
+export -f _oneline
+
 _prompt() {
   clear
-  printf "%s" "$1"
-  read -r REPLY
+  if command -v gum >/dev/null 2>&1; then
+    REPLY="$(gum write --placeholder "$1" --width 0 --height 10)"
+  else
+    printf "%s" "$1"
+    read -r REPLY
+  fi
 }
 export -f _prompt
 
@@ -86,6 +95,7 @@ _add_task() {
 
   title="${input%%--*}"
   ann="${input#*--}"
+  title=$(_oneline "$title")
   title=$(_trim "$title")
   ann=$(_trim "$ann")
 
@@ -109,7 +119,8 @@ _modify_task() {
   [ -z "$id" ] && return
 
   _prompt "task modify <mods>: "
-  mods="$REPLY"
+  mods=$(_oneline "$REPLY")
+  mods=$(_trim "$mods")
   [ -z "$mods" ] && return
 
   set -f
@@ -126,7 +137,8 @@ _wait_task() {
   [ -z "$id" ] && return
 
   _prompt "task modify wait:<date>: "
-  date="$REPLY"
+  date=$(_oneline "$REPLY")
+  date=$(_trim "$date")
   [ -n "$date" ] && task rc.verbose=nothing "$id" modify wait:"$date"
 }
 export -f _wait_task
@@ -164,7 +176,6 @@ fzf_args=(
   --preview-window 'down:75%:nowrap'
   --layout 'reverse'
   --preview 'COLUMNS=$FZF_PREVIEW_COLUMNS task rc.defaultwidth=$FZF_PREVIEW_COLUMNS rc._forcecolor=yes $(_id {}) info'
-  # --preview 'task rc.defaultwidth=$FZF_PREVIEW_COLUMNS rc._forcecolor=yes $(_id {}) info'
   # Keybinding
   --bind 'alt-k:preview-up,alt-j:preview-down' # TODO Refreshing makes it go to the top every second
   --bind 'alt-p:toggle-preview'
