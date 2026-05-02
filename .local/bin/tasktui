@@ -25,6 +25,119 @@ _query() {
 }
 export -f _query
 
+_trim() {
+  local value="$1"
+  value="${value#"${value%%[![:space:]]*}"}"
+  value="${value%"${value##*[![:space:]]}"}"
+  printf "%s" "$value"
+}
+export -f _trim
+
+_prompt() {
+  clear
+  printf "%s" "$1"
+  read -r REPLY
+}
+export -f _prompt
+
+_toggle_task_start() {
+  local id start
+  id=$(_id "$1")
+  [ -z "$id" ] && return
+
+  start=$(task _get "$id.start")
+  if [ -n "$start" ]; then
+    task rc.verbose=nothing "$id" stop
+  else
+    task rc.verbose=nothing "$id" start
+  fi
+}
+export -f _toggle_task_start
+
+_toggle_task_done() {
+  local id status
+  id=$(_id "$1")
+  [ -z "$id" ] && return
+
+  status=$(task _get "$id.status")
+  if [ "$status" = "completed" ]; then
+    task "$id" modify status:pending
+  else
+    task "$id" done
+  fi
+}
+export -f _toggle_task_done
+
+_annotate_task() {
+  local id ann
+  id=$(_id "$1")
+  [ -z "$id" ] && return
+
+  _prompt "task annotate <annotation>: "
+  ann="$REPLY"
+  [ -n "$ann" ] && task rc.verbose=nothing "$id" annotate "$ann"
+}
+export -f _annotate_task
+
+_add_task() {
+  local input title ann uuid rc
+  _prompt "task add <title> [-- <annotation>]: "
+  input="$REPLY"
+
+  title="${input%%--*}"
+  ann="${input#*--}"
+  title=$(_trim "$title")
+  ann=$(_trim "$ann")
+
+  [ -z "$title" ] && return
+
+  set -f
+  task rc.verbose=nothing add $title
+  rc=$?
+  set +f
+  [ $rc -ne 0 ] && return $rc
+
+  uuid=$(task +LATEST uuids)
+  [[ "$input" == *"--"* && -n "$ann" ]] && task rc.verbose=nothing "$uuid" annotate "$ann"
+  curl --unix-socket /tmp/fzf.sock http -d "change-query($uuid)" 2>/dev/null
+}
+export -f _add_task
+
+_modify_task() {
+  local id mods rc
+  id=$(_id "$1")
+  [ -z "$id" ] && return
+
+  _prompt "task modify <mods>: "
+  mods="$REPLY"
+  [ -z "$mods" ] && return
+
+  set -f
+  task rc.verbose=nothing "$id" modify $mods
+  rc=$?
+  set +f
+  return $rc
+}
+export -f _modify_task
+
+_wait_task() {
+  local id date
+  id=$(_id "$1")
+  [ -z "$id" ] && return
+
+  _prompt "task modify wait:<date>: "
+  date="$REPLY"
+  [ -n "$date" ] && task rc.verbose=nothing "$id" modify wait:"$date"
+}
+export -f _wait_task
+
+_edit_task() {
+  local id
+  id=$(_id "$1")
+  [ -n "$id" ] && task rc.verbose=nothing "$id" edit
+}
+export -f _edit_task
+
 OPTS=(
     "rc.report.dyn.columns=uuid.short,status.short,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description.truncated_count,urgency"
     "rc.report.dyn.labels=UUID,S,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg"
@@ -55,13 +168,13 @@ fzf_args=(
   # Keybinding
   --bind 'alt-k:preview-up,alt-j:preview-down' # TODO Refreshing makes it go to the top every second
   --bind 'alt-p:toggle-preview'
-  --bind 'alt-s:execute-silent(id=$(_id {}); s=$(task _get "$id.start"); [ -n "$s" ] && task rc.verbose=nothing "$id" stop || task rc.verbose=nothing "$id" start)+reload(sleep 0.1; '"$on_reload"')'
-  --bind 'alt-d:execute-silent(id=$(_id {}); s=$(task _get "$id.status"); [ "$s" = "completed" ] && task "$id" modify status:pending || task "$id" done)+reload(sleep 0.1; '"$on_reload"')'
-  --bind 'alt-n:execute(id=$(_id {}); clear; echo -n "task annotate <annotation>: "; read ann; [ -n "$ann" ] && task rc.verbose=nothing "$id" annotate "$ann")+reload(sleep 0.1; '"$on_reload"')'
-  --bind 'alt-a:execute(clear; echo -n "task add <title> [-- <annotation>]: "; read input; title="${input%%--*}"; ann="${input#*--}"; title="${title%% }"; [ -z "$title" ] && exit; task rc.verbose=nothing add "$title"; uuid=$(task +LATEST _get uuid); [[ "$input" == *"--"* && -n "${ann## }" ]] && task rc.verbose=nothing "$uuid" annotate "${ann## }"; curl --unix-socket /tmp/fzf.sock http -d "change-query($uuid)" 2>/dev/null)+reload(sleep 0.1; '"$on_reload"')'
-  --bind 'alt-m:execute(id=$(_id {}); clear; echo -n "task modify <mods>: "; read mods; [ -n "$mods" ] && task rc.verbose=nothing "$id" modify $mods)+reload(sleep 0.1; '"$on_reload"')'
-  --bind 'alt-w:execute(id=$(_id {}); clear; echo -n "task modify wait:<date>: "; read date; [ -n "$date" ] && task rc.verbose=nothing "$id" modify wait:"$date")+reload(sleep 0.1; '"$on_reload"')'
-  --bind 'enter:execute(id=$(_id {}); task rc.verbose=nothing "$id" edit)+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'alt-s:execute-silent(_toggle_task_start {})+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'alt-d:execute-silent(_toggle_task_done {})+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'alt-n:execute(_annotate_task {})+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'alt-a:execute(_add_task)+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'alt-m:execute(_modify_task {})+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'alt-w:execute(_wait_task {})+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'enter:execute(_edit_task {})+reload(sleep 0.1; '"$on_reload"')'
   # Theming
   --ansi
   --color 'pointer:green,marker:green'
@@ -74,4 +187,3 @@ trap "kill $LOOP_PID 2>/dev/null" EXIT INT TERM
 
 # Start fzf
 $TASK $DEFAULT_FILTER | fzf "${fzf_args[@]}"
-
