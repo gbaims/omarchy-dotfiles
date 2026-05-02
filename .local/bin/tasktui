@@ -63,19 +63,33 @@ _toggle_task_start() {
 }
 export -f _toggle_task_start
 
-_toggle_task_done() {
+_toggle_task_complete() {
   local id status
   id=$(_id "$1")
   [ -z "$id" ] && return
 
   status=$(task _get "$id.status")
   if [ "$status" = "completed" ]; then
-    task "$id" modify status:pending
+    task rc.verbose=nothing "$id" modify status:pending
   else
     task "$id" done
   fi
 }
-export -f _toggle_task_done
+export -f _toggle_task_complete
+
+_toggle_task_delete() {
+  local id status
+  id=$(_id "$1")
+  [ -z "$id" ] && return
+
+  status=$(task _get "$id.status")
+  if [ "$status" = "deleted" ]; then
+    task rc.verbose=nothing "$id" modify status:pending
+  else
+    task rc.confirmation=no rc.verbose=nothing "$id" delete
+  fi
+}
+export -f _toggle_task_delete
 
 _annotate_task() {
   local id ann
@@ -163,7 +177,7 @@ TASK="task ${OPTS[*]} dyn"
 DEFAULT_FILTER="status:pending -WAITING limit:1"
 
 on_reload="q=\$(_query {q}); $TASK \${q:-$DEFAULT_FILTER} || true"
-SHORTCUTS='alt: (a)dd | (n)ote | (m)odify | (w)ait | (s)tart/stop | (d)one/undo | (p)review'
+SHORTCUTS='(a)dd | (n)ote | (m)odify | (w)ait | (s)tart/stop | (c)omplete/undo | (d)elete/restore'
 
 fzf_args=(
   # Task Warrior reports have two header lines
@@ -183,7 +197,8 @@ fzf_args=(
   --bind 'alt-k:preview-up,alt-j:preview-down' # TODO Refreshing makes it go to the top every second
   --bind 'alt-p:toggle-preview'
   --bind 'alt-s:execute-silent(_toggle_task_start {})+reload(sleep 0.1; '"$on_reload"')'
-  --bind 'alt-d:execute-silent(_toggle_task_done {})+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'alt-c:execute-silent(_toggle_task_complete {})+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'alt-d:execute-silent(_toggle_task_delete {})+reload(sleep 0.1; '"$on_reload"')'
   --bind 'alt-n:execute(_annotate_task {})+reload(sleep 0.1; '"$on_reload"')'
   --bind 'alt-a:execute(_add_task)+reload(sleep 0.1; '"$on_reload"')'
   --bind 'alt-m:execute(_modify_task {})+reload(sleep 0.1; '"$on_reload"')'
