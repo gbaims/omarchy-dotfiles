@@ -145,17 +145,23 @@ _modify_task() {
 }
 export -f _modify_task
 
-_wait_task() {
-  local id date
+_toggle_task_wait() {
+  local id status date
   id=$(_id "$1")
   [ -z "$id" ] && return
+
+  status=$(task _get "$id.status")
+  if [ "$status" = "waiting" ]; then
+    task rc.verbose=nothing "$id" modify wait:
+    return
+  fi
 
   _prompt "task modify wait:<date>: "
   date=$(_oneline "$REPLY")
   date=$(_trim "$date")
   [ -n "$date" ] && task rc.verbose=nothing "$id" modify wait:"$date"
 }
-export -f _wait_task
+export -f _toggle_task_wait
 
 _edit_task() {
   local id
@@ -202,7 +208,7 @@ fzf_args=(
   --bind 'alt-n:execute(_annotate_task {})+reload(sleep 0.1; '"$on_reload"')'
   --bind 'alt-a:execute(_add_task)+reload(sleep 0.1; '"$on_reload"')'
   --bind 'alt-m:execute(_modify_task {})+reload(sleep 0.1; '"$on_reload"')'
-  --bind 'alt-w:execute(_wait_task {})+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'alt-w:execute(_toggle_task_wait {})+reload(sleep 0.1; '"$on_reload"')'
   --bind 'enter:execute(_edit_task {})+reload(sleep 0.1; '"$on_reload"')'
   # Theming
   --ansi
