@@ -1,7 +1,10 @@
 theme = "omarchy"
 
 [editor]
+line-number = "relative"
+popup-border = "all"
 end-of-line-diagnostics = "hint"
+true-color = true
 
 [editor.file-picker]
 hidden = false
@@ -12,3 +15,4 @@ other-lines = "disable"
 
 [keys.normal.space]
 g = [ ":write-all", ":insert-output ldf >/dev/tty", ":redraw", ":reload-all" ]
+
