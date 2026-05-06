@@ -16,6 +16,9 @@ echo "$NEW_VALUE" > "$COUNTFILE"
 
 TASK=(task rc.verbose=nothing rc.color=no rc.confirmation=no)
 
+# Deleted task must never be active
+"${TASK[@]}" +ACTIVE +DELETED stop >/dev/null 2>&1 || true
+
 # Starting a waiting task means it should leave the waiting queue.
 "${TASK[@]}" +ACTIVE +WAITING start.after:now-10sec modify wait: >/dev/null 2>&1 || true
 
