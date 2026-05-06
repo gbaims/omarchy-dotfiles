@@ -7,5 +7,5 @@ source ~/.local/share/omarchy/default/bash/rc
 
 
 # General aliases
-alias hx='helix'
 alias ll='ls -la'
+alias hx="helix"
