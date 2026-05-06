@@ -171,8 +171,8 @@ _edit_task() {
 export -f _edit_task
 
 OPTS=(
-    "rc.report.dyn.columns=uuid.short,status.short,entry.age,start.age,depends,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description.truncated_count,urgency"
-    "rc.report.dyn.labels=UUID,S,Entry,Start,Deps,Project,Tag,Recur,S,Due,Until,Description,Urg"
+    "rc.report.dyn.columns=uuid.short,status.short,entry.age,start.age,depends,project,tags,recur,scheduled.countdown,wait.remaining,due.relative,until.remaining,description.truncated_count,urgency"
+    "rc.report.dyn.labels=UUID,S,Entry,Start,Deps,Project,Tag,Recur,S,Wait,Due,Until,Description,Urg"
     "rc.report.dyn.sort=start-,urgency-,modified-"
     "rc.report.dyn.filter="
     "rc.verbose=label"
