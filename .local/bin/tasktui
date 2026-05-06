@@ -209,6 +209,7 @@ fzf_args=(
   --bind 'ctrl-y:execute(_modify_task {})+reload(sleep 0.1; '"$on_reload"')'
   --bind 'ctrl-w:execute(_toggle_task_wait {})+reload(sleep 0.1; '"$on_reload"')'
   --bind 'enter:execute(_edit_task {})+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'esc:clear-query'
   # Theming
   --ansi
   --color 'pointer:green,marker:green'
