@@ -183,7 +183,7 @@ TASK="task ${OPTS[*]} dyn"
 DEFAULT_FILTER="status:pending -WAITING limit:1"
 
 on_reload="q=\$(_query {q}); $TASK \${q:-$DEFAULT_FILTER} || true"
-SHORTCUTS='(t)ask | (a)nnotation | modif(y) | (w)ait | (s)tart ⇄ | (c)omplete ⇄ | (d)elete ⇄'
+SHORTCUTS='(t)ask | (a)nnotation | modif(y) | (w)ait | (s)tart ⇄ | (c)omplete ⇄ | (d)elete ⇄ | (b)urndown'
 
 fzf_args=(
   # Task Warrior reports have two header lines
@@ -208,6 +208,7 @@ fzf_args=(
   --bind 'ctrl-t:execute(_add_task)+reload(sleep 0.1; '"$on_reload"')'
   --bind 'ctrl-y:execute(_modify_task {})+reload(sleep 0.1; '"$on_reload"')'
   --bind 'ctrl-w:execute(_toggle_task_wait {})+reload(sleep 0.1; '"$on_reload"')'
+  --bind 'ctrl-b:execute(clear;task burndown.daily; read -n 1)'
   --bind 'enter:execute(_edit_task {})+reload(sleep 0.1; '"$on_reload"')'
   --bind 'esc:clear-query'
   # Theming
